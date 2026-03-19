@@ -19,6 +19,7 @@ export function PopunderAd() {
                     key={idx}
                     src={src}
                     strategy="afterInteractive"
+                    data-cfasync="false"
                 />
             ))}
         </>

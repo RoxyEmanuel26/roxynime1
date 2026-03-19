@@ -98,12 +98,12 @@ export const ADS_CONFIG: Record<AdNetwork, NetworkConfig> = {
         interstitials: [],
     },
     propellerads: {
-        enabled: false,
+        enabled: true,
         name: "PropellerAds",
         banners: [],
         rectangles: [],
         natives: [],
-        popunder: "",
+        popunder: "https://5gvci.com/act/files/tag.min.js?z=10749021",
         interstitials: [],
     },
     hilltopads: {
