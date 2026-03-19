@@ -47,7 +47,7 @@ export interface NetworkConfig {
     /** Native/small ads (320x50, etc.) */
     natives: AdUnit[];
     /** Popunder script URL (if available) */
-    popunder?: string;
+    popunder?: string | string[];
     /** Interstitial ad units */
     interstitials: AdUnit[];
 }
@@ -61,16 +61,31 @@ export interface NetworkConfig {
  * Verification Meta Tags
  * Add tags here to verify your site ownership for ad networks (monetag, etc.) 
  */
-export const VERIFICATION_META_TAGS: Array<{name: string, content: string}> = [];
+export const VERIFICATION_META_TAGS: Array<{name: string, content: string}> = [
+    { name: "monetag", content: "1ab63733ec943084da290bcec0563b4f" }
+];
 
 export const ADS_CONFIG: Record<AdNetwork, NetworkConfig> = {
     adsterra: {
-        enabled: false,
+        enabled: true,
         name: "Adsterra",
         banners: [],
         rectangles: [],
-        natives: [],
-        popunder: "",
+        natives: [
+            {
+                id: "adsterra-native-1",
+                network: "adsterra",
+                format: "native",
+                width: 320,
+                height: 50,
+                key: "f4e8b01a3f4af4cefec1ce373cb41344",
+                scriptUrl: "https://latherachelesscatastrophe.com/f4e8b01a3f4af4cefec1ce373cb41344/invoke.js",
+            }
+        ],
+        popunder: [
+            "https://latherachelesscatastrophe.com/b2/b2/38/b2b238bb437aaa46c0db5591583902f1.js",
+            "https://latherachelesscatastrophe.com/45/76/14/45761452a2bb05092322a0912b608791.js"
+        ],
         interstitials: [],
     },
     exoclick: {
@@ -132,7 +147,7 @@ export function getInterstitialAds(): AdUnit[] {
 /** Get all popunder scripts from enabled networks */
 export function getPopunderScripts(): string[] {
     return getEnabledNetworks()
-        .map((n) => n.popunder)
+        .flatMap((n) => Array.isArray(n.popunder) ? n.popunder : (n.popunder ? [n.popunder] : []))
         .filter((s): s is string => !!s);
 }
 
@@ -182,6 +197,12 @@ export function generateAdSrcDoc(ad: AdUnit, overrideW?: number, overrideH?: num
 
     switch (ad.network) {
         case "adsterra":
+            if (ad.format === "native") {
+                return `<html><head></head><body style="margin:0;padding:0;background:transparent;">
+                    <script async="async" data-cfasync="false" src="${ad.scriptUrl || `https://latherachelesscatastrophe.com/${ad.key}/invoke.js`}"></script>
+                    <div id="container-${ad.key}"></div>
+                </body></html>`;
+            }
             return `<html><body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;min-height:${h}px;overflow:hidden;background:transparent;">
                 <script type="text/javascript">
                     atOptions = { 'key':'${ad.key}', 'format':'iframe', 'height':${h}, 'width':${w}, 'params':{} };
