@@ -61,8 +61,8 @@ export interface NetworkConfig {
  * Verification Meta Tags
  * Add tags here to verify your site ownership for ad networks (monetag, etc.) 
  */
-export const VERIFICATION_META_TAGS: Array<{name: string, content: string}> = [
-    { name: "monetag", content: "1ab63733ec943084da290bcec0563b4f" }
+export const VERIFICATION_META_TAGS: Array<{ name: string, content: string }> = [
+
 ];
 
 export const ADS_CONFIG: Record<AdNetwork, NetworkConfig> = {
@@ -78,13 +78,13 @@ export const ADS_CONFIG: Record<AdNetwork, NetworkConfig> = {
                 format: "native",
                 width: 320,
                 height: 50,
-                key: "f4e8b01a3f4af4cefec1ce373cb41344",
-                scriptUrl: "https://latherachelesscatastrophe.com/f4e8b01a3f4af4cefec1ce373cb41344/invoke.js",
+                key: "",
+                scriptUrl: "",
             }
         ],
         popunder: [
-            "https://latherachelesscatastrophe.com/b2/b2/38/b2b238bb437aaa46c0db5591583902f1.js",
-            "https://latherachelesscatastrophe.com/45/76/14/45761452a2bb05092322a0912b608791.js"
+            "",
+            ""
         ],
         interstitials: [],
     },
@@ -103,7 +103,7 @@ export const ADS_CONFIG: Record<AdNetwork, NetworkConfig> = {
         banners: [],
         rectangles: [],
         natives: [],
-        popunder: "https://5gvci.com/act/files/tag.min.js?z=10749021",
+        popunder: "",
         interstitials: [],
     },
     hilltopads: {
